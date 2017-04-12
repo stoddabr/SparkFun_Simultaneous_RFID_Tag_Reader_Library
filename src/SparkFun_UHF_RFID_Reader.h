@@ -5,6 +5,10 @@
   By: Nathan Seidle @ SparkFun Electronics
   Date: October 3rd, 2016
   https://github.com/sparkfun/Simultaneous_RFID_Tag_Reader
+  
+  Appended By: Brett Stoddard @ Oregon State University Open Source Environmental Sensing Lab
+  Date: April 11, 2017
+  https://github.com/sparkfun/Simultaneous_RFID_Tag_Reader
 
   License: Open Source MIT License
   If you use this code please consider buying an awesome board from SparkFun. It's a ton of
@@ -148,6 +152,15 @@ class RFID
     //uint16_t tags[MAX_NUMBER_OF_TAGS][12]; //Assumes EPC won't be longer than 12 bytes
     //uint16_t tagRSSI[MAX_NUMBER_OF_TAGS];  
     //uint16_t uniqueTags = 0;
+
+/*
+    Any public functions beyond this line was written by Brett Stoddard of Oregon State University's Open Source Environmental Lab
+*/
+
+    uint8_t readTagSensor401(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut = COMMAND_TIME_OUT);
+    uint8_t readTagSensor402(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut = COMMAND_TIME_OUT);
+    uint8_t readTagSensor403(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut = COMMAND_TIME_OUT);
+
 
   private:
 
