@@ -27,9 +27,9 @@ License Information
 
 This product is _**open source**_! 
 
-The **code** is beerware; if you see me (or any other SparkFun employee) at the local, and you've found our code helpful, please buy us a round!
+The **code** is beerware; if you see me or another OPEnS Lab researcher and you've found this code helpful, please buy us a round!
 
-Please use, reuse, and modify these files as you see fit. Please maintain attribution to SparkFun Electronics and release anything derivative under the same license.
+Please use, reuse, and modify these files as you see fit. Please maintain attribution to SparkFun Electronics and Oregon State University OPEnS Lab. Release anything derivative under the same license.
 
 Distributed as-is; no warranty is given.
 
