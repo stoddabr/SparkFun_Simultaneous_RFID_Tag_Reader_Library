@@ -6,6 +6,10 @@
   Date: October 3rd, 2016
   https://github.com/sparkfun/Simultaneous_RFID_Tag_Reader
 
+  Appended By: Brett Stoddard @ Oregon State University Open Source Environmental Sensing Lab
+  Date: April 11, 2017
+  https://github.com/sparkfun/Simultaneous_RFID_Tag_Reader
+  
   License: Open Source MIT License
   If you use this code please consider buying an awesome board from SparkFun. It's a ton of
   work (and a ton of fun!) to put these libraries together and we want to keep making neat stuff!
@@ -20,6 +24,7 @@
     tmr__status_8h.html - Contains the Status Word error codes
 
   Available Functions:
+  	SPARKFUN:
     setBaudRate
     setRegion
     setReadPower
@@ -31,6 +36,11 @@
     writeTagData
     killTag
     (nyw) lockTag
+    	OPENS:
+    readTagSensor401
+    readTagSensor402
+    readTagSensor403
+    
 */
 
 #if (ARDUINO >= 100)
@@ -859,4 +869,38 @@ uint16_t RFID::calculateCRC(uint8_t *u8Buf, uint8_t len)
   }
 
   return crc;
+}
+
+/*
+	Anything beyond this line was written by Brett Stoddard of Oregon State University's Open Source Environmental Lab
+*/
+
+//Read sensor information
+//Caller must provide an array for EPC to be stored in
+uint8_t RFID::readTagSensor401(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut)
+{
+  uint8_t bank = 0x03; //User data bank
+  uint8_t address = 0x0B; //Word Address
+
+  return (readData(bank, address, epc, epcLength, timeOut));
+}
+
+//Read sensor information
+//Caller must provide an array for EPC to be stored in
+uint8_t RFID::readTagSensor401(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut)
+{
+  uint8_t bank = 0x00; //Reserved data bank
+  uint8_t address = 0x0B; //Word Address
+
+  return (readData(bank, address, epc, epcLength, timeOut));
+}
+
+//Read sensor information
+//Caller must provide an array for EPC to be stored in
+uint8_t RFID::readTagSensor403(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut)
+{
+  uint8_t bank = 0x00; //Reserved data bank
+  uint8_t address = 0x0C; //Word Address
+
+  return (readData(bank, address, epc, epcLength, timeOut));
 }
