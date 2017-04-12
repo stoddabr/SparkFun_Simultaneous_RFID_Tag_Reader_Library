@@ -1,7 +1,8 @@
 SparkFun Simultaneous RFID Tag Reader Library
 ===========================================================
 
-//![SparkFun Simultaneous RFID Tag Reader - NANO M6E](https://cdn.sparkfun.com//assets/parts/1/1/9/1/6/14066-06a.jpg)
+![SparkFun Simultaneous RFID Tag Reader - NANO M6E](https://cdn.sparkfun.com//assets/parts/1/1/9/1/6/14066-06a.jpg)
+
 //update later
 
 [*SparkFun Simultaneous RFID Tag Reader - NANO M6E (SEN-14066)*](https://www.sparkfun.com/products/14066)
