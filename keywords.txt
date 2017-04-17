@@ -78,6 +78,10 @@ printMessageArray	 KEYWORD2
 
 calculateCRC 	KEYWORD2
 
+readTagSensor401 KEYWORD2
+readTagSensor402 KEYWORD2
+readTagSensor403 KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################
