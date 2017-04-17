@@ -887,7 +887,7 @@ uint8_t RFID::readTagSensor401(uint8_t *epc, uint8_t &epcLength, uint16_t timeOu
 
 //Read sensor information
 //Caller must provide an array for EPC to be stored in
-uint8_t RFID::readTagSensor401(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut)
+uint8_t RFID::readTagSensor402(uint8_t *epc, uint8_t &epcLength, uint16_t timeOut)
 {
   uint8_t bank = 0x00; //Reserved data bank
   uint8_t address = 0x0B; //Word Address
