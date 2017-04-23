@@ -58,7 +58,8 @@ void loop()
   {
     myEPClength = sizeof(myEPC); //Length of EPC is modified each time .readTagEPC is called
 
-    responseType = nano.readTagEPC(myEPC, myEPClength, 500); //Scan for a new tag up to 500ms
+    responseType = nano.readTagSensor402(myEPC, myEPClength, 500); //OPENS CHANGED LINE-- Brett Stoddard
+    //changed to read sensor location rather than EPC location
     Serial.println(F("Searching for tag"));
   }
 
