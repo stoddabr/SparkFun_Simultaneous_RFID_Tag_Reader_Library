@@ -72,8 +72,8 @@ void loop()
   delay(150);
 
   //Print EPC
-  Serial.print(F(" epc["));
-  for (byte x = 0 ; x < myEPClength ; x++)
+  Serial.print(F(" Sensor Value[ "));
+  for (byte x = 1 ; x < 2 ; x++)
   {
     if (myEPC[x] < 0x10) Serial.print(F("0"));
     Serial.print(myEPC[x], HEX);
