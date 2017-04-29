@@ -73,7 +73,7 @@ void loop()
 
   //Print EPC
   Serial.print(F(" SEN["));
-  for (byte x = 0 ; x < myEPClength ; x++)
+  for (byte x = 1 ; x < 2 ; x++)
   {
     if (myEPC[x] < 0x10) Serial.print(F("0"));
     Serial.print(myEPC[x], HEX);
