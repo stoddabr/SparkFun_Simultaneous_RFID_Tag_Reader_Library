@@ -1,86 +1,67 @@
 /*
-  Reading multiple RFID tags, simultaneously!
-  By: Nathan Seidle @ SparkFun Electronics
-  Date: October 3rd, 2016
-  https://github.com/sparkfun/Simultaneous_RFID_Tag_Reader
-  Single shot read - Ask the reader to tell us what tags it currently sees. And it beeps!
-  If using the Simultaneous RFID Tag Reader (SRTR) shield, make sure the serial slide
-  switch is in the 'SW-UART' position.
-*/
+ * Reading the RSSI and Sensor Values
+ * Hardware: SmartTrac Dogbone Tags, M6E Nano RFID reader on sparkfun board, Arduino UNO
+ * Purpose: To test the the relationship between RSSI and moisture sensor value
+ * Author: Brett Stoddard- OSU OPEnS Lab
+ * Legal: Open Source
+ */
 
-#include <SoftwareSerial.h> //Used for transmitting to the device
-
-SoftwareSerial softSerial(2, 3); //RX, TX
+#include <SoftwareSerial.h> //used for transmitting to RFID board
+SoftwareSerial softSerial(2,3); //RX, TX ; pins are perimenent
 
 #include "SparkFun_UHF_RFID_Reader.h" //Library for controlling the M6E Nano module
-RFID nano; //Create instance
+RFID nano; //create instance 
 
-#define BUZZER1 9
-//#define BUZZER1 0 //For testing quietly
-#define BUZZER2 10
+void setup() {
 
-void setup()
-{
-  Serial.begin(115200);
-
-  pinMode(BUZZER1, OUTPUT);
-  pinMode(BUZZER2, OUTPUT);
-
-  digitalWrite(BUZZER2, LOW); //Pull half the buzzer to ground and drive the other half.
-
-  while (!Serial);
+//setup for hardware serial
+  Serial.begin( 115200 ); //make sure serial monitor is set to correct baud rate
+  while(!Serial); //wait until serial monitor is ready
   Serial.println();
   Serial.println("Initializing...");
 
-  if (setupNano(38400) == false) //Configure nano to run at 38400bps
+//setup for RFID reader
+  if(setupNano(38400) == false) //function defined below line 69
+            //configure nano to run at 38400b/s
   {
-    Serial.println("Module failed to respond. Please check wiring.");
-    while (1); //Freeze!
+    Serial.println("Module failed to respond. Please check wiring to RFID shield");
+    while(1); //stop everything
   }
-
+  
   nano.setRegion(REGION_NORTHAMERICA); //Set to North America
-
-  nano.setReadPower(500); //5.00 dBm. Higher values may cause USB port to brown out
+  nano.setReadPower(1000); //10.00 dBm. Higher values may cause USB port to brown out
   //Max Read TX Power is 27.00 dBm and may cause temperature-limit throttling
+
 }
 
-void loop()
-{
-  Serial.println(F("Press a key to scan for a tag"));
-  while (!Serial.available()); //Wait for user to send a character
-  Serial.read(); //Throw away the user's character
+void loop() {
+  Serial.println(F("Press a key to scan for a tag")); //"F(variables)"; wrap with F stores variables in flash memory, frees up RAM 
+  while(!Serial.available()); //pause until user sends character
+  Serial.read(); //throws away input character(s)
+  
+  byte mySensorVal[2];  //sensor data will be 5 bits for 402h SmartTrac tags
+  byte mySensorValLength;  
+  byte responseTypeSensor = 0;  // 0 != RESPONSE_SUCCESS
 
-  byte myEPC[12]; //Most EPCs are 12 bytes
-  byte myEPClength;
-  byte responseType = 0;
-
-  while (responseType != RESPONSE_SUCCESS)//RESPONSE_IS_TAGFOUND)
+  
+  while (responseTypeSensor != RESPONSE_SUCCESS) //tag not found yet
   {
-    myEPClength = sizeof(myEPC); //Length of EPC is modified each time .readTagEPC is called
-
-    responseType = nano.readTagSensor402(myEPC, myEPClength, 500); //OPENS CHANGED LINE-- Brett Stoddard
-    //changed to read sensor location rather than EPC location
-    Serial.println(F("Searching for tag"));
+//Read sensor value
+    mySensorValLength = sizeof(mySensorVal); //length of sensor value may change each time .readTagSensorXXX is called
+    responseTypeSensor = nano.readTagSensor402(mySensorVal, mySensorValLength, 1000); //Scan for a new tag up to 1000ms
+    Serial.println(F("Searching for tag")); 
   }
-
-  //Beep! Piano keys to frequencies: http://www.sengpielaudio.com/KeyboardAndFrequencies.gif
-  tone(BUZZER1, 2093, 150); //C
-  delay(150);
-  tone(BUZZER1, 2349, 150); //D
-  delay(150);
-  tone(BUZZER1, 2637, 150); //E
-  delay(150);
-
-  //Print EPC
-  Serial.print(F(" Sensor Value[ "));
-  for (byte x = 1 ; x < 2 ; x++)
+  
+//print sensor value
+  Serial.print(F("sensor value: "));
+  for (byte i = 0 ; i < mySensorValLength ; i++)
   {
-    if (myEPC[x] < 0x10) Serial.print(F("0"));
-    Serial.print(myEPC[x], HEX);
-    Serial.print(F(" "));
+    Serial.print(mySensorVal[i], DEC);   //sensor value is read as decimal
   }
-  Serial.println(F("]"));
+  Serial.println(F(" ")); //newline
 }
+
+
 
 //Gracefully handles a reader that is already configured and already reading continuously
 //Because Stream does not have a .begin() we have to do this outside the library
@@ -126,5 +107,5 @@ boolean setupNano(long baudRate)
 
   nano.setAntennaPort(); //Set TX/RX antenna ports to 1
 
-  return (true); //We are ready to rock
+  return (true); //We are ready to rock 
 }
