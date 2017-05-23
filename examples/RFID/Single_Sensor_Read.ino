@@ -29,7 +29,7 @@ void setup() {
   }
   
   nano.setRegion(REGION_NORTHAMERICA); //Set to North America
-  nano.setReadPower(1000); //10.00 dBm. Higher values may cause USB port to brown out
+  nano.setReadPower(1500); //15.00 dBm. Higher values may cause USB port to brown out
   //Max Read TX Power is 27.00 dBm and may cause temperature-limit throttling
 
 }
@@ -54,7 +54,7 @@ void loop() {
   
 //print sensor value
   Serial.print(F("sensor value: "));
-  for (byte i = 0 ; i < mySensorValLength ; i++)
+  for (byte i = 1 ; i < 2 ; i++)
   {
     Serial.print(mySensorVal[i], DEC);   //sensor value is read as decimal
   }
