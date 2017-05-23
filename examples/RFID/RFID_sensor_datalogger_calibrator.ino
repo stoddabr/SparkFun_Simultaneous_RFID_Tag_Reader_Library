@@ -85,7 +85,7 @@ void loop() {
       }
       else // If we failed to log GPS
       { // Print an error, don't update lastLog
-        Serial.println(F("Failed to log new GPS data."));
+        Serial.println(F("Failed to log new data."));
       }
   }  
 }
