@@ -1,5 +1,6 @@
 SparkFun Simultaneous RFID Tag Reader Library
 ===========================================================
+[![DOI](https://zenodo.org/badge/87991794.svg)](https://zenodo.org/badge/latestdoi/87991794)
 
 ![Unparsed Data Pulled From Example Code](https://static1.squarespace.com/static/57dade3e893fc0962ff46311/t/58fc1fa5b3db2b703c3e496d/1492918293945/moisture_data_4_17_2017?format=750w)
 
